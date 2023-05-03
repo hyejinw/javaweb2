@@ -134,7 +134,7 @@ public class LoginDAO {
 	// 회원가입처리
 	public void setJoinOk(LoginVO vo) {
 		try {
-			sql = "insert into login values (default,?,?,?,default,default,default)";
+			sql = "insert into login values (default,?,?,?,default,default,default,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());
@@ -250,6 +250,32 @@ public class LoginDAO {
 			rsClose();
 		}
 		return totRecCnt;
+	}
+
+	// 성명으로 아이디 찾기
+	public LoginVO getNameCheck(String name) {
+		LoginVO vo = new LoginVO();
+		try {
+			sql ="select mid,name from login where name=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			rs= pstmt.executeQuery();
+			
+			rs.next();
+			vo.setMid(rs.getString("mid"));
+			vo.setName(rs.getString("name"));
+			System.out.println(vo.getMid());
+			System.out.println(vo.getName());
+			
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		System.out.println("s: "+vo.getMid());
+		System.out.println("s: "+vo.getName());
+		return vo;
 	}
 	
 }

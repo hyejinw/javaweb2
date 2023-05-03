@@ -32,8 +32,8 @@
 	    </tr>
 	    <tr>
 	      <td colspan="2" class="text-center">
-	        <input type="submit" value="관리자로그인" class="btn btn-success"/>
-	        <input type="reset" value="다시입력" class="btn btn-warning"/>
+	        <input type="submit" value="관리자로그인" class="btn btn-success mr-2"/>
+	        <input type="reset" value="다시입력" class="btn btn-warning  mr-2"/>
 	        <input type="button" value="돌아가기" onclick="location.href='${ctp}/GuestList.gu';" class="btn btn-secondary"/>
 	      </td>
 	    </tr>

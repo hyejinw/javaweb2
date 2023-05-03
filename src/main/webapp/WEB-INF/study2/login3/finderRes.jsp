@@ -20,7 +20,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container">
-	<h2>비밀번호 찾기 결과</h2>	
+	<h2>비밀번호 찾기 결과 3</h2>	
 	<table class="table table-bordered">
 		<tr>
 			<th>아이디</th>
@@ -45,7 +45,7 @@
 	</table>
 	<br/>
  	<p>
-		<a href="${ctp}/study/0428_database/login.jsp" class="btn btn-success mr-2">돌아가기</a>
+		<a href="${ctp}/Login.fa" class="btn btn-success mr-2">돌아가기</a>
 	</p>
 </div>	
 <P><br /></P>

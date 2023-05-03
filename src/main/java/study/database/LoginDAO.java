@@ -68,6 +68,7 @@ public class LoginDAO {
 				vo.setPoint(rs.getInt("point"));
 				vo.setLastDate(rs.getString("lastDate"));
 				vo.setTodayCount(rs.getInt("todayCount"));
+				//vo.setFailCount(rs.getInt("failCount"));					
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -135,7 +136,7 @@ public class LoginDAO {
 	//회원가입 처리
 	public void setJoinOk(LoginVO vo) {
 		try {
-			sql = "insert into login values (default,?,?,?,default,default,default)";
+			sql = "insert into login values (default,?,?,?,default,default,default,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());

@@ -28,20 +28,22 @@
 <p><br/></p>
 <div class="container">
   <form name="myform" method="post" action="${ctp}/LoginOk.re">
-    <table class="table table-bordered text-center">
+    <table class="table table-borderless text-center">
       <tr>
-        <td colspan="2"><font size="5">로 그 인2</font></td>
+      	<td></td>
+        <td class="text-center"><font size="5">로 그 인2</font></td>
+        <td class="text-right"><a href='${ctp}/IdFinder.re'><span class="badge badge-pill badge-dark">아이디 찾기</span></a></td> 
       </tr>
       <tr>
         <th>아이디</th>
-        <td><input type="text" name="mid" value="${mid}" autofocus required class="form-control"/></td>
+        <td colspan="2"><input type="text" name="mid" value="${mid}" autofocus required class="form-control"/></td>
       </tr>
       <tr>
         <th>비밀번호</th>
-        <td><input type="password" name="pwd" required class="form-control"/></td>
+        <td colspan="2"><input type="password" name="pwd" required class="form-control"/></td>
       </tr>
       <tr>
-        <td colspan="2">
+        <td colspan="3" class="text-right">
           <input type="submit" value="로그인" class="btn btn-success mr-2"/>
           <input type="reset" value="다시입력" class="btn btn-warning mr-2"/>
           <input type="button" value="회원가입" onclick="location.href='${ctp}/Join.re';" class="btn btn-primary mr-4"/>

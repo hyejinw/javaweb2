@@ -106,9 +106,9 @@ public class LoginOk extends HttpServlet {
 			
 			// nonono!! 이렇게 못 쓴다. 로그인에 계속 로그인에 실패했을 때를 기준으로 만들어야 한다. 
 			//마지막으로 로그인한 날과 다른 날이면 failCount 값을 0으로 만든다.
-			if(!strToday.equals(lastDate.substring(0,10))) {
-				dao.failCount(0, mid);
-			}
+			/*
+			 * if(!strToday.equals(lastDate.substring(0,10))) { dao.failCount(0, mid); }
+			 */
 			
 			vo = dao.getMidCheck(mid);
 			int failCount = vo.getFailCount();

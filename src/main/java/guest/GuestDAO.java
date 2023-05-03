@@ -115,4 +115,21 @@ public class GuestDAO {
 		}
 		return totRecCnt;
 	}
+
+	// 방명록 자료 삭제처리
+	public int setGuestDelete(int idx) {
+		int res = 0;
+		try {
+			sql = "delete from guest where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
 }

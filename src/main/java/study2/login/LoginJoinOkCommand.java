@@ -6,8 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import study.database.LoginDAO;
-import study.database.LoginVO;
+import conn.SecurityUtil;
 
 public class LoginJoinOkCommand implements LoginInterface {
 
@@ -17,10 +16,13 @@ public class LoginJoinOkCommand implements LoginInterface {
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
 		String name = request.getParameter("name")==null ? "" : request.getParameter("name");
 		
+		// 암호화 처리!!!!!!
+		SecurityUtil	security = new SecurityUtil();
+		String shaPwd = security.encryptSHA256(pwd);
 		LoginVO vo = new LoginVO();
 		
 		vo.setMid(mid);
-		vo.setPwd(pwd);
+		vo.setPwd(shaPwd);
 		vo.setName(name);
 		
 		LoginDAO dao = new LoginDAO();
