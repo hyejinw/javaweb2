@@ -21,7 +21,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container">	
-	<h2 class="text-center">게 시 판 리 스 트</h2>
+	<h2 class="text-center">게 시 판 리 스 트 wpqkfdksf </h2>
 	<table class="table table-borderless">
 		<tr>
 			<td colspan="2" class="text-right">
