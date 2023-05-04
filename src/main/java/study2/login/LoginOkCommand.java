@@ -1,7 +1,6 @@
 package study2.login;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -87,7 +86,7 @@ public class LoginOkCommand implements LoginInterface {
 		}
 		else {
 			// 회원 인증 실패시 처리... 다시 로그인창으로 보내준다.
-			request.setAttribute("msg", "로그인 실패~~~");
+			request.setAttribute("msg", "로그인 실패");
 			request.setAttribute("url", request.getContextPath()+"/Login.re");
 		}
 	}

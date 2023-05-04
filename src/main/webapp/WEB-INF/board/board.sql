@@ -24,3 +24,65 @@ insert into board values (default,'admin','관리맨','게시판 서비스 시�
 select* from board;
 
 drop table board;
+
+/* 날짜 함수 처리 연습 */
+select now();  /*오늘 날짜*/
+select year(now());
+select month(now());
+select day(now());
+select concat(year(now()),'년 ',month(now()),'월 ',day(now()),'일');
+select concat(year(now()),'년 ',month(now()),'월 ',day(now()),'일') as date; /* VO에 등록해두면 변수로 사용 가능!! */
+select weekday(now());   /* 0=월요일 */
+select dayofweek(now()); /* 1=일요일 */
+select date(now());      /* 날짜를 '년-월-일' 로 출력 */
+
+select year('2023-5-3');
+select idx, wDate from board;
+select idx, year(wDate) from board;
+
+/* 날짜 연산 */
+/* date_add(date, interval 값 Type) */
+select date_add(now(), interval 1 day); /* 오늘 날짜보다 +1 = 내일 날짜 출력 */
+select date_add(now(), interval -1 day); /* 오늘 날짜보다 -1 = 어제 날짜 출력 */
+/*오늘 날짜보다 +10시간 이후의 날짜와 시간 출력 */
+select now(),date_add(now(), interval 10 day_hour);
+
+/* date_sub(date, interval 값 Type) */
+select date_sub(now(), interval 1 day); /* 오늘 날짜보다 -1 = 어제 날짜 출력 */
+select date_sub(now(), interval -1 day); /* 오늘 날짜보다 1 = 내일 날짜 출력 */
+
+/* board테이블에 적용 */
+/* 1. 게시글 중에서 하루 전에 올려온 글만 보여주시오. == 노노 안 됑! 비교만 해볼게*/
+select wDate, date_add(now(), interval -1 day) from board;
+
+/* 2. 어제 올라온 글만 보여줘~~ */
+select idx, wDate from board where substring(wDate,1,10) = substring(date_add(now(), interval -1 day),1,10);
+
+/* 3. 24시간 전에 올라온 글만 보여줘! */
+select idx, wDate, now() from board where wDate >= date_add(now(), interval -24 day_hour);
+select * from board where wDate > date_add(now(), interval -24 day_hour);
+
+
+/* 날짜차이 계산 : DATEDIFF(시작날짜, 마지막날짜) */
+select datediff('2023-05-04', '2023-05-01');
+select datediff(now(), '2023-05-01');
+select idx, datediff(now(), wDate) from board;
+select idx, datediff(now(), wDate) as day_diff from board;   /* 앞에서 뒤를 뺀다. 값이 +로 */
+select idx, datediff(wDate, now()) as day_diff from board;   /* 값이 -로 */
+
+select timestampdiff(hour, now(), '2023-05-04');   /* 뒤에서 앞을 뺀다. 값이 -로 */
+select timestampdiff(hour, '2023-05-04', now());   /* 값이 +로 */
+select timestampdiff(hour, wDate, now()) from board;
+select timestampdiff(hour, wDate, now()) as hour_diff from board;
+select *,timestampdiff(hour, wDate, now()) as hour_diff from board order by idx desc;
+select *,timestampdiff(hour, wDate, now()) as hour_diff from board order by idx desc limit 0, 5;
+select *,timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff from board order by idx desc limit 0, 5;
+
+select *,timestampdiff(minute, wDate, now()) as minute_diff from board;
+select *,timestampdiff(second, wDate, now()) as second_diff from board;
+
+
+/* 날짜양식(date_format()) : (4자리)년(%Y), (2자리)년(%y), 월(%m), 일(%d) */
+select wDate, date_format(wDate, '%Y-%m-%d %H:%i') as English from board;
+select wDate, date_format(wDate, '%Y-%m-%d %H:%i') as '수정 후' from board;
+

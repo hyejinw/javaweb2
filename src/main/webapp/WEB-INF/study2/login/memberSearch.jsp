@@ -28,7 +28,7 @@
 <jsp:include page="/include/header.jsp" />
 <p><br/></p>
 <div class="container">
-  <h2>개별 회원 조회</h2>
+  <h2>개별 회원 조회2</h2>
   <table class="table table-bordered">
     <tr>
       <th>고유번호</th>

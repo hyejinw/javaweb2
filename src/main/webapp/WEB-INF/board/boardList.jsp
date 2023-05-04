@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
 <html>
@@ -8,6 +9,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>boardList.jsp</title>
 	<jsp:include page="/include/bs4.jsp"/>
+	<style>
+	 	.here:hover {
+	 		text-decoration:none;
+	 	}
+	</style>
   <script>
     'use strict';
     
@@ -21,7 +27,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container">	
-	<h2 class="text-center">게 시 판 리 스 트dfskfd</h2>
+	<h2 class="text-center">게 시 판 리 스 트</h2>
 	<table class="table table-borderless">
 		<tr>
 			<td colspan="2" class="text-right">
@@ -41,13 +47,13 @@
 			<td class="text-right">
         <!-- 첫페이지 / 이전페이지 / (현재페이지번호/총페이지수) / 다음페이지 / 마지막페이지 -->
         <c:if test="${pag > 1}">
-          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=1" title="첫페이지로">◁◁</a>
-          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${pag-1}" title="이전페이지로">◀</a>
+          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=1" title="첫페이지로" class="here">◁◁</a>
+          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${pag-1}" title="이전페이지로" class="here">◀</a>
         </c:if>
         ${pag} | ${totPage}
         <c:if test="${pag < totPage}">
-          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${pag+1}" title="다음페이지로">▶</a>
-          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${totPage}" title="마지막페이지로">▷▷</a>
+          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${pag+1}" title="다음페이지로" class="here">▶</a>
+          <a href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${totPage}" title="마지막페이지로" class="here">▷▷</a>
         </c:if>
 			</td>
 		</tr>
@@ -66,9 +72,24 @@
 				<%-- <td>${vo.idx}</td> --%>
 				<td>${curScrStartNo}</td>
 				<c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
-				<td>${vo.title}</td>
+				<td>
+					${vo.title}
+					<c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif"/></c:if>
+<%-- 					<c:if test="${vo.hour_diff <= 24}"><span class="badge badge-warning">New</span></c:if> --%>
+				</td>
 				<td>${vo.nickName}</td>
-				<td>${vo.wDate}</td>
+				<td>
+					<!-- 1일(24시간)이내는 시간만 표시, 이후는 날짜와 시간 표시 : 2023-05-04 10:35:21 -->
+					<!-- 단, 날짜가 오늘 날짜만 시간으로 표시하고 어제 날짜는 날짜로 표시 -->
+					<c:if test="${vo.hour_diff > 24}">${fn:substring(vo.wDate,0,10)}</c:if>
+					<c:if test="${vo.hour_diff <= 24}">
+						${vo.day_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,16)}
+					</c:if>
+<%-- 			<c:if test="${vo.hour_diff <= 24}">
+						<c:if test="${vo.day_diff == 0}">${fn:substring(vo.wDate,11,16)}</c:if>
+						<c:if test="${vo.day_diff != 0}">${fn:substring(vo.wDate,0,10)}</c:if>
+					</c:if> --%>
+				</td>
 				<td>${vo.readNum}</td>
 				<td>${vo.good}</td>
 			</tr>	
