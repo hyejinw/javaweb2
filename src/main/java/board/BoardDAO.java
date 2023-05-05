@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import conn.GetConn;
 
 public class BoardDAO {
-	// 싱글톤으로 선언된 DB연결 객체(GetCon)을 연결
+	// 싱글톤으로 선언된 DB연결 객체(GetConn)을 연결
 	GetConn getConn = GetConn.getInstance();
 	private Connection conn = getConn.getConn();
 	private PreparedStatement pstmt = null;
@@ -23,7 +23,10 @@ public class BoardDAO {
 	public ArrayList<BoardVO> getBoardList(int startIndexNo, int pageSize) {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		try {
-			sql = "select * from board order by idx desc limit ?,?";
+			//sql = "select * from board order by idx desc limit ?,?";
+			sql = "select *,timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff"
+					+ " from board order by idx desc limit ?,?";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -43,7 +46,12 @@ public class BoardDAO {
 				vo.setOpenSw(rs.getString("openSw"));
 				vo.setwDate(rs.getString("wDate"));
 				vo.setGood(rs.getInt("good"));
-
+				
+				// 게시글 시간 차이 계산용
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				// 게시글 날짜 차이 계산용
+				vo.setDay_diff(rs.getInt("day_diff"));
+				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {

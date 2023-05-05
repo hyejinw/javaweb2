@@ -29,7 +29,7 @@
 <jsp:include page="/include/header.jsp" />
 <p><br/></p>
 <div class="container">
-  <h2>회원 정보 수정</h2>
+  <h2>회원 정보 수정2</h2>
   <form name="myform" method="post" action="${ctp}/UpdateOk.re">
   	<table class="table text-center">
   	  <tr>

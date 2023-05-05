@@ -24,7 +24,8 @@ public class BoardInputOkCommand implements BoardInterface {
 		BoardVO vo = new BoardVO();
 		
 		vo.setMid(mid);
-		vo.setNickName(nickName);
+		//vo.setNickName(nickName);
+		vo.setNickName(mid);
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setEmail(email);

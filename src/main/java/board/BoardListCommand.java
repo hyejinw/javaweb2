@@ -56,6 +56,5 @@ public class BoardListCommand implements BoardInterface {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
-		
 	}
 }

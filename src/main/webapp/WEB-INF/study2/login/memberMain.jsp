@@ -32,7 +32,7 @@
 <jsp:include page="/include/header.jsp" />
 <p><br/></p>
 <div class="container text-center">
-  <h2>회원 전용방</h2>
+  <h2>회원 전용방2</h2>
   <br/>
   <p>현재 ${sMid}(${sName})님 로그인 중이십니다.</p>
   <hr/>

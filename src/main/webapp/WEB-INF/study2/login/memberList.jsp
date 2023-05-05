@@ -23,7 +23,7 @@
 <jsp:include page="/include/header.jsp" />
 <p><br/></p>
 <div class="container">
-  <h2 class="text-center">전 체 회 원 리 스 트</h2>
+  <h2 class="text-center">전 체 회 원 리 스 트2</h2>
 	<table class="table table-borderless mb-0 p-0">
     <tr>
       <td>
