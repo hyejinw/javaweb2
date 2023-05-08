@@ -24,42 +24,37 @@ function joinCheck(){
 	const regex1 = /^[a-zA-Z0-9]{4,20}$/; //(아이디) 영문자 또는 숫자 4~20자 
 	const regex2 = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{4,20}$/g; //(비밀번호)4자 이상 20자 이하, 영어, 숫자, 특수문자
 	const regex3 = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;  // (닉네임)2자 이상 16자 이하, 영어 또는 숫자 또는 한글
-	const regex4 = /^[A-Za-z가-힣]{1,}$/g;  // (성명)한글,영문만 적어도 1자이상 
+	const regex4 = /[A-Za-z가-힣]/g;  // (성명)한글,영문만 적어도 1자이상 
 	const regex5 = /^[0-9a-zA-Z]+/g; // 이메일
-  //const regex6 = /\d{2,3}-\d{3,4}-\d{4}$/g; //(전화번호)
-  
-  
+  const regex6 = /\d{2,3}-\d{3,4}-\d{4}$/g; //(전화번호)
+
   // 아이디 확인
-  if(!regex1.test(mid)) {
+  if(mid=="" || !regex1.test(mid)){
 	  console.log('아이디 여기로 왔어요',mid);
-    document.getElementById("midError").innerHTML="아이디 형식에 맞춰주세요.(영어/숫자만 4~20자)";
+    document.getElementById("midError").innerHTML="아이디 형식에 맞춰주세요.(영어/숫자 4~20자)";
     check = false;
-   } 
-   else {
-	   document.getElementById("midError").innerHTML="";
-	   check = true;
    }
   
   // 비밀번호 확인
-  if(!regex2.test(pwd)) {
-    document.getElementById("pwdError").innerHTML="비밀번호가 올바르지 않습니다.(영어/숫자 필수, 특수문자 허용 4~20자)";
+  if(pwd==="" || !regex2.test(pwd)){
+    document.getElementById("pwdError").innerHTML="비밀번호가 올바르지 않습니다.(영어/숫자 필수,특수문자 허용 4~20자)";
     check = false;
   }
   else {
-    document.getElementById("pwdError").innerHTML="";
+	    document.getElementById("pwdError").innerHTML="";
 	    
-	  if(pwd2==="") {
-	    document.getElementById("pwdError2").innerHTML="비밀번호를 다시 입력해주세요.";
-	    check = false;
-	  }
-	  else if(pwd !== pwd2) {
+	  if(pwd !== pwd2){
+	    document.getElementById("pwdError").innerHTML="";
 	    document.getElementById("pwdError2").innerHTML="비밀번호가 동일하지 않습니다.";
 	    check = false;
 	  }
+	
+	  else if(pwd2===""){
+	    document.getElementById("pwdError2").innerHTML="비밀번호를 다시 입력해주세요.";
+	    check = false;
+	  }
 	  else {
-  	  document.getElementById("pwdError").innerHTML="";
-  	  document.getElementById("pwdError2").innerHTML="";
-  	  check = true;
+		  
 	  }
   }
   
@@ -68,36 +63,27 @@ function joinCheck(){
     document.getElementById("nickNameError").innerHTML="닉네임 형식에 맞춰주세요.(영어/숫자/한글 2~16자)";
     check = false;
    }
-  else {
-	  document.getElementById("nickNameError").innerHTML="";
-	  check = true;
-   }
   
   // 성명 확인
   if(name=="" || !regex4.test(name)){
-    document.getElementById("nameError").innerHTML="성명이 올바르지 않습니다.(한글/영문만 1자이상)";
+    document.getElementById("nameError").innerHTML="성명이 올바르지 않습니다.(한글/영문 1자이상)";
     check = false;
    }
-  else {
-	  document.getElementById("nameError").innerHTML="";
-	  check = true;
-   }
-   
+  
   // 이메일확인
   if(email1=="" || !regex5.test(email1)){
     document.getElementById("emailError").innerHTML="이메일이 올바르지 않습니다.";
     check = false;
    }
-  else {
-	  document.getElementById("emailError").innerHTML="";
-	  check = true;
-   }   
-  
   
   if(!check){
 	  alert('입력된 값을 다시 확인해주세요.');
-	  window.scrollTo(0,250); // (그냥 위치만 바뀌는)스크롤 위로 올리기 
-	  check = true;
+	  //window.scrollTo(0,0); // (그냥 위치만 바뀌는)스크롤 위로 올리기 
+		let scrollTopBtn = document.getElementById('top');
+		
+		scrollTopBtn.addEventListener('click',function(){
+		    window.scrollTo({top: 0, behavior:'smooth'});
+		});
   }
   else {
     if(idCheckSw == 0) {
@@ -109,12 +95,12 @@ function joinCheck(){
 			document.getElementById("nickNameBtn").focus();
 		}
 		else {
-/*	    document.getElementById("midError").innerHTML="";
+	    document.getElementById("midError").innerHTML="";
 	    document.getElementById("pwdError").innerHTML="";
 	    document.getElementById("pwdError2").innerHTML="";
 	    document.getElementById("nickNameError").innerHTML="";
 	    document.getElementById("nameError").innerHTML="";
-	    document.getElementById("emailError").innerHTML="";*/
+	    document.getElementById("emailError").innerHTML="";
 	    myform.tel.value = tel;
 	    myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress + "/";
 	    myform.email.value = email;

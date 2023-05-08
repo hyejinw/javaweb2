@@ -24,6 +24,9 @@ public class MemberVO {
 	private String startDate;
 	private String lastDate;
 	private int todayCnt;
+	
+	private String salt;
+	
 	int getIdx() {
 		return idx;
 	}
@@ -162,12 +165,19 @@ public class MemberVO {
 	void setTodayCnt(int todayCnt) {
 		this.todayCnt = todayCnt;
 	}
+	String getSalt() {
+		return salt;
+	}
+	void setSalt(String salt) {
+		this.salt = salt;
+	}
 	@Override
 	public String toString() {
-		return "memberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
+		return "MemberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
 				+ ", gender=" + gender + ", birthday=" + birthday + ", tel=" + tel + ", address=" + address + ", email=" + email
 				+ ", homePage=" + homePage + ", job=" + job + ", hobby=" + hobby + ", photo=" + photo + ", content=" + content
 				+ ", userInfor=" + userInfor + ", userDel=" + userDel + ", point=" + point + ", level=" + level + ", visitCnt="
-				+ visitCnt + ", startDate=" + startDate + ", lastDate=" + lastDate + ", todayCnt=" + todayCnt + "]";
+				+ visitCnt + ", startDate=" + startDate + ", lastDate=" + lastDate + ", todayCnt=" + todayCnt + ", salt=" + salt
+				+ "]";
 	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @SuppressWarnings("serial")
 @WebServlet("*.mem")
 public class MemberController extends HttpServlet {
@@ -21,6 +22,8 @@ public class MemberController extends HttpServlet {
 		String com = uri.substring(uri.lastIndexOf("/"),uri.lastIndexOf("."));
 		
 		if(com.equals("/MemberLogin")) {
+			command = new MemberLoginCommand();    // 함 (변경사항 많음)
+			command.execute(request, response);
 			viewPage += "/memberLogin.jsp";
 		}
 		else if(com.equals("/MemberLoginOk")) {
@@ -28,11 +31,16 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/MemberLogout")) {
+			command = new MemberLogoutCommand();    // 함
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/MemberJoin")) {   // 함
 			viewPage += "/memberJoin.jsp";
 		}
 		else if(com.equals("/MemberJoinOk")) {
-			command = new MemberJoinOkCommand();    // 함 
+			command = new MemberJoinOkCommand();    // 함 (변경사항 많음)
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
@@ -46,10 +54,29 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/memberNickCheck.jsp";
 		}
-		else if(com.equals("/IdFinder")) {       // 미완
-			command = new IdFinderCommand();
+		else if(com.equals("/IdFinder")) {       // 함
+			viewPage += "/idFinder.jsp";
+		}
+		else if(com.equals("/IdFinderOk")) {
+			command = new IdFinderOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/IdFinderRes")) {
+			command = new IdFinderResCommand();
+			command.execute(request, response);
+			viewPage += "/idFinderRes.jsp";
+		}		
+		else if(com.equals("/MemberMain")) {
+			command = new MemberMainCommand();    // 함 
+			command.execute(request, response);
+			viewPage += "/memberMain.jsp";
+		}
+		// 특정 회원이 작성한 글 보기
+		else if(com.equals("/MemberGuestList")) {
+			command = new MemberGuestListCommand();    // 함 
+			command.execute(request, response);
+			viewPage += "/memberGuestList.jsp";
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

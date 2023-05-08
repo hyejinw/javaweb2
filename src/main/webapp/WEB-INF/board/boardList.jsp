@@ -73,7 +73,7 @@
 				<td>${curScrStartNo}</td>
 				<c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
 				<td>
-					${vo.title}
+					<a href="${ctp}/BoardContent.bo?idx=${vo.idx}">${vo.title}</a>
 					<c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif"/></c:if>
 <%-- 					<c:if test="${vo.hour_diff <= 24}"><span class="badge badge-warning">New</span></c:if> --%>
 				</td>

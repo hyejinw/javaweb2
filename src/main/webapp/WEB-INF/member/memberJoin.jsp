@@ -1,6 +1,8 @@
+<%-- <%@page import="java.time.LocalDate"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%-- 오늘 날짜: <%=java.time.LocalDate.now() %> --%>
 <c:set var="ctp" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
 <html>
@@ -11,11 +13,14 @@
 	<jsp:include page="/include/bs4.jsp"/>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="${ctp}/js/woo.js"></script> 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  <!-- sweetalert -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  sweetalert -->
 	<!-- 회원가입 정규식 확인용 -->
 	<script src="${ctp}/js/joinCheck.js"></script> 
 	<script>
 		'use strict';
+		// 아이디와 닉네임 중복버튼을 클릭했는지의 여부를 확인하기 위한 변수(버튼 클릭 후엔 내용 수정처리 불가)
+		let idCheckSw = 0;
+		let nickCheckSw = 0;
 		
 		// 아이디 중복 검사 
 		function idCheck() {
@@ -27,6 +32,8 @@
 				myform.mid.focus();
 			}
 			else {
+				idCheckSw = 1;
+				myform.mid.readOnly = true;
 				window.open(url, "nWin", "width=580px, height=250px");
 			}
 		}
@@ -37,9 +44,11 @@
 			
 			if(nickName.trim() == "") {
 				alert("닉네임을 입력하세요");
-				myform.mid.focus();
+				myform.nickName.focus();
 			}
 			else {
+				nickCheckSw = 1;
+				myform.nickName.readOnly = true;
 				window.open(url, "nWin", "width=580px, height=250px");
 			}
 		}
@@ -62,6 +71,10 @@
 		});		
 	</script>
 	<style>
+		/* 현재 창 스크롤 부드럽게 */
+		html {
+			scroll-behavior:smooth;
+		}
 		.text-primary {
 			font-size: 0.9em;
 		}
@@ -75,7 +88,7 @@
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">
-      <label for="mid">아이디 : &nbsp; &nbsp;<input type="button" value="아이디 중복체크" class="btn btn-secondary btn-sm" onclick="idCheck()"/></label>
+      <label for="mid">아이디 : &nbsp; &nbsp;<input type="button" value="아이디 중복체크" id="midBtn" class="btn btn-secondary btn-sm" onclick="idCheck()"/></label>
       <input type="text" class="form-control" name="mid" id="mid" placeholder="아이디를 입력하세요." required autofocus/>
     	<div id="midError" class="text-primary"></div>
     </div>
@@ -90,7 +103,7 @@
       <div id="pwdError2" class="text-primary"></div>
     </div>
     <div class="form-group">
-      <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" value="닉네임 중복체크" class="btn btn-secondary btn-sm" onclick="nickCheck()"/></label>
+      <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" value="닉네임 중복체크" id="nickNameBtn" class="btn btn-secondary btn-sm" onclick="nickCheck()"/></label>
       <input type="text" class="form-control" id="nickName" placeholder="별명을 입력하세요." name="nickName" required />
     	<div id="nickNameError" class="text-primary"></div>
     </div>
@@ -102,9 +115,9 @@
     <div class="form-group">
       <label for="email1" >Email address:</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Email을 입력하세요." id="email1" name="email1" required />
+          <input type="text" class="form-control" placeholder="Email을 입력하세요." name="email1" id="email1" required />
           <div class="input-group-append">
-            <select name="email2" class="custom-select">
+            <select name="email2" id="email2" class="custom-select">
               <option value="naver.com" selected>naver.com</option>
               <option value="hanmail.net">hanmail.net</option>
               <option value="hotmail.com">hotmail.com</option>
@@ -131,9 +144,11 @@
     </div>
     <div class="form-group">
    	  <!-- 생일을 null로 보내면 자꾸 오류가 생겨서 기본값을 줘버렸다. -->
-    	<c:set var="ymd" value="<%=new java.util.Date()%>" />
       <label for="birthday">생일</label>
-      <input type="date" name="birthday" value=<fmt:formatDate value="${ymd}" pattern="yyyy-MM-dd" /> class="form-control"/>
+      <input type="date" name="birthday" value="<%=java.time.LocalDate.now() %>" class="form-control"/>
+<%--     	<c:set var="ymd" value="<%=new java.util.Date()%>" />
+      <label for="birthday">생일</label>
+      <input type="date" name="birthday" value=<fmt:formatDate value="${ymd}" pattern="yyyy-MM-dd" /> class="form-control"/> --%>
     </div>
     <div class="form-group">
       <div class="input-group mb-3">
@@ -161,7 +176,7 @@
     </div>
     <div class="form-group">
       <label for="address">주소</label>
-      <input type="hidden" name="address" id="address">
+      <!-- <input type="hidden" name="address" id="address"> -->
       <div class="input-group mb-1">
         <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control">
         <div class="input-group-append">
@@ -183,6 +198,7 @@
     <div class="form-group">
       <label for="name">직업</label>
       <select class="form-control" id="job" name="job">
+        <!-- <option value="">직업 선택</option> -->
         <option>학생</option>
         <option>회사원</option>
         <option>공무원</option>
@@ -191,7 +207,7 @@
         <option>법조인</option>
         <option>세무인</option>
         <option>자영업</option>
-        <option>기타</option>
+        <option selected>기타</option>
       </select>
     </div>
     <div class="form-group">
@@ -263,6 +279,9 @@
     <button type="button" class="btn btn-secondary" onclick="joinCheck()">회원가입</button> &nbsp;
     <button type="reset" class="btn btn-secondary">다시작성</button> &nbsp;
     <button type="button" class="btn btn-secondary" onclick="">돌아가기</button>
+    <input type="hidden" name="tel"/>
+    <input type="hidden" name="address"/>
+    <input type="hidden" name="email"/>
   </form>
 </div>	
 <P><br /></P>

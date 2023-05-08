@@ -1,6 +1,7 @@
 package member;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 //		String now = formatter.format(date);
 //		System.out.println("now: "+ now);
 		
-		
+		// 1. 값 가져오기
 		String mid = request.getParameter("mid")==null ? "":request.getParameter("mid");
 		String pwd = request.getParameter("pwd")==null ? "":request.getParameter("pwd");
 		String nickName = request.getParameter("nickName")==null ? "":request.getParameter("nickName");
@@ -34,20 +35,51 @@ public class MemberJoinOkCommand implements MemberInterface {
 		String email = request.getParameter("email")==null ? "":request.getParameter("email");
 		String homePage = request.getParameter("homePage")==null ? "":request.getParameter("homePage");
 		String job = request.getParameter("job")==null ? "":request.getParameter("job");
-		String hobby = request.getParameter("hobby")==null ? "":request.getParameter("hobby");
+		
+		// hobby는 배열로 오기 때문에 따로 추가 처리가 필요
+		String[] hobbies = request.getParameterValues("hobby");
+		String hobby = "";
+		if(hobbies.length != 0) {
+			for(String strHobby : hobbies) {
+				hobby += strHobby + "/";
+			}
+		}
+		hobby = hobby.substring(0, hobby.lastIndexOf("/"));
 		
 		// noimage.jsp를 여기다 줄 필요가 있는지 의문이다.
 		String photo = request.getParameter("photo")==null ? "noimage.jpg":request.getParameter("photo");
 		String content = request.getParameter("content")==null ? "":request.getParameter("content");
 		String userInfor = request.getParameter("userInfor")==null ? "":request.getParameter("userInfor");
 		
-    // 암호화 처리!!!!!!
-    SecurityUtil    security = new SecurityUtil();
-    String shaPwd = security.encryptSHA256(pwd);
-  
+		// 2. BackEnd 체크(null값, 길이, 중복여부 확인)
 		
-		MemberVO vo = new MemberVO();
+		// 아이디와 닉네임 중복체크
+		MemberDAO dao = new MemberDAO();
+		MemberVO vo =dao.getMemberMidCheck(mid);
+		if(vo.getMid() != null) {
+			request.setAttribute("msg", "이미 사용 중인 아이디입니다.");
+			request.setAttribute("url", request.getContextPath() + "/MemberJoin.mem");
+			return;
+		}
+		vo =dao.getMemberMidCheck(mid);
+		if(vo.getNickName() != null) {
+			request.setAttribute("msg", "이미 사용 중인 닉네임입니다.");
+			request.setAttribute("url", request.getContextPath() + "/MemberJoin.mem");
+			return;
+		}
+		
+		// 비밀번호 암호화 처리!!!!!!
+		UUID uid = UUID.randomUUID();
+		String salt = uid.toString().substring(0,8);
+		pwd = salt + pwd;
+		
+    SecurityUtil security = new SecurityUtil();
+    String shaPwd = security.encryptSHA256(pwd);
+		
+    // 3. 모든 체크 완료 후, vo에 값을 담는다.
+		vo = new MemberVO();
 		vo.setMid(mid);
+//		vo.setPwd(pwd);
 		vo.setPwd(shaPwd);
 		vo.setNickName(nickName);
 		vo.setName(name);
@@ -62,9 +94,8 @@ public class MemberJoinOkCommand implements MemberInterface {
 		vo.setPhoto(photo);
 		vo.setContent(content);
 		vo.setUserInfor(userInfor);
-		
-		
-		MemberDAO dao = new MemberDAO();
+		vo.setSalt(salt);
+
 		int res = dao.setMemberJoin(vo);
 		
 		if(res == 1) {

@@ -52,6 +52,7 @@ public class MemberDAO {
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
 				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setSalt(rs.getString("salt"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 에러 : " + e.getMessage());
@@ -84,7 +85,7 @@ public class MemberDAO {
 	public int setMemberJoin(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default,default,default,default,default,default,default)";
+			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default,default,default,default,default,default,default,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());
@@ -101,6 +102,7 @@ public class MemberDAO {
 			pstmt.setString(13, vo.getPhoto());
 			pstmt.setString(14, vo.getContent());
 			pstmt.setString(15, vo.getUserInfor());
+			pstmt.setString(16, vo.getSalt());
 			pstmt.executeUpdate();
 			res = 1;
 		
@@ -112,16 +114,30 @@ public class MemberDAO {
 		return res;
 	}
 
-	//(로그인 확인용 메소드 들어갈 자리!!)
+	//(로그인 확인용 메소드)
+	
+	//오늘 처음 방문시에 방문카운트를 0으로 초기화.
+	public void setTodayCntUpdate(String mid) {
+		try {
+			sql = "update member set todayCnt=0 where mid =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 에러 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
 	
 	// 로그인 시, point증가, todayCnt 증가, visitCnt 증가, lastDate 변경
-	public void setPointPlus(String mid, int point, int todayCount) {
+	public void setMemberTotalUpdate(String mid, int nowTodayPoint) {
 		try {
-      sql = "update login set point=?, lastDate=now(), todayCount=?, lastDate=now() where mid=?";
+      sql = "update member set point=?, lastDate=now(), todayCnt=todayCnt+1, visitCnt=visitCnt+1 where mid=?";
       pstmt = conn.prepareStatement(sql);
-	  	pstmt.setInt(1, point);
-	  	pstmt.setInt(2, todayCount);
-  		pstmt.setString(3, mid);
+	  	pstmt.setInt(1, nowTodayPoint);
+  		pstmt.setString(2, mid);
  	  	pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -130,4 +146,34 @@ public class MemberDAO {
 			getConn.pstmtClose();
 		}
 	}
+
+	// 아이디 찾기
+	public MemberVO getNameCheck(String name, String nickName) {
+		MemberVO vo = new MemberVO();
+		try {
+			sql ="select mid,name,nickName from member where name=? and nickName=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, nickName);
+			rs= pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println('통');
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
+			}
+			System.out.println("s: "+vo.getMid());
+			System.out.println("s: "+vo.getName());
+			
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vo;
+	}
+	
+	
 }

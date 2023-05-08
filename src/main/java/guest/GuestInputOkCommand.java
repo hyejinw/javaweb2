@@ -36,7 +36,7 @@ public class GuestInputOkCommand implements GuestInterface {
 			request.setAttribute("url", request.getContextPath()+"/GuestList.gu");
 		}
 		else {
-			request.setAttribute("msg", "방문소감 등록 실패~~");
+			request.setAttribute("msg", "방문소감 등록 실패");
 			request.setAttribute("url", request.getContextPath()+"/GuestInput.gu");
 		}
 	}
