@@ -24,30 +24,32 @@ public class MemberController extends HttpServlet {
 			viewPage += "/memberLogin.jsp";
 		}
 		else if(com.equals("/MemberLoginOk")) {
-			command = new MemberLoginOkCommand();
+			command = new MemberLoginOkCommand();   // 미완
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/MemberJoin")) {
+		else if(com.equals("/MemberJoin")) {   // 함
 			viewPage += "/memberJoin.jsp";
 		}
 		else if(com.equals("/MemberJoinOk")) {
-			command = new MemberJoinOkCommand();
+			command = new MemberJoinOkCommand();    // 함 
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/MemberInput")) {
-			viewPage += "/memberJoin.jsp";
-		}
 		else if(com.equals("/MemberIdCheck")) {
-			command = new MemberIdCheckCommand();
+			command = new MemberIdCheckCommand();    // 함 
 			command.execute(request, response);
 			viewPage += "/memberIdCheck.jsp";
 		}
-		else if(com.equals("/MemberList")) {
-			command = new MemberListCommand();
+		else if(com.equals("/MemberNickCheck")) {
+			command = new MemberNickCheckCommand();    // 함 
 			command.execute(request, response);
-			viewPage += "/memberList.jsp";
+			viewPage += "/memberNickCheck.jsp";
+		}
+		else if(com.equals("/IdFinder")) {       // 미완
+			command = new IdFinderCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

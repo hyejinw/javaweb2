@@ -27,7 +27,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container">	
-	<h2>회원 정보 수정</h2>
+	<h2>회원 정보 수정 3</h2>
 	<form name="myform" method="post" action="${ctp}/UpdateOk.fa" >
 		<table class="table text-center">
 			<tr>

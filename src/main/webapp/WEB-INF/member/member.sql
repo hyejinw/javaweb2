@@ -18,7 +18,7 @@ create table member (
 	content text,                              /* 자기 소개 */
 	userInfor char(6) default '공개',            /* 회원 정보 공개여부 */
 	userDel char(2) default 'NO',               /* 회원 탈퇴신청여부(NO:현재 활동 중, OK: 탈퇴 신청 중) */
-	point int default 100,                      /* 회원 누적포인트(가입포인트 100점 증정, 1회 방문시포인트 증가, 1회 최대 50점) */
+	point int default 100,                      /* 회원 누적포인트(가입포인트 100점 증정, 1회 방문시포인트 10점 증가, 1일 최대 50점) */
 	level int default 1,                         /* 0:관리자, 1준회원, 2:정회원, 3:우수회원, 4: 운영자 */
 	visitCnt int default 0,                     /* 총 방문 횟수 */
 	startDate datetime default now(),           /* 최초 가입일 */
@@ -29,3 +29,5 @@ create table member (
 );
 
 desc member;
+
+select * from member;

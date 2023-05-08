@@ -31,7 +31,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container text-center">	
-	<h2>회원 전용 방</h2>
+	<h2>회원 전용 방 3</h2>
 	<br/>
 	<p>현재 ${sMid}(${sName})님 로그인 중</p>
 	<hr/>

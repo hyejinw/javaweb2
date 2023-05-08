@@ -13,14 +13,14 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container">	
-	<form name="myform" method="post" action="${ctp}/database/LoginOk">
+	<form name="myform" method="post" action="${ctp}/LoginOk.fa">
 		<table class="table table-bordered text-center">
 			<tr>
 				<td colspan="2"><font size="5">로 그 인 3</font></td>
 			</tr>
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="mid" autofocus required class="form-control"/></td>
+				<td><input type="text" name="mid" value="${mid }" autofocus required class="form-control"/></td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>

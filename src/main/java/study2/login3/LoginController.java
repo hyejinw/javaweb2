@@ -52,6 +52,9 @@ public class LoginController extends HttpServlet {
             command.execute(request, response);
             viewPage = "/include/message.jsp";
         }
+        else if(com.equals("/MemberMain")) {
+        	viewPage += "/memberMain.jsp";
+        }
         else if(com.equals("/LoginSearch")) {
             command = new LoginSearchCommand();
             command.execute(request, response);

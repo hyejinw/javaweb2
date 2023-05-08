@@ -85,9 +85,8 @@ public class LoginDAO {
             pstmt.setInt(1, point);
             pstmt.setInt(2, todayCount);
             pstmt.setString(3, mid);
-          pstmt.executeUpdate();
-        } 
-            catch (SQLException e) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
             System.out.println("SQL 오류 : " + e.getMessage());
         } finally {
             pstmtClose();
@@ -246,7 +245,7 @@ public class LoginDAO {
         return res;
     }
  
-    // 로그인 실패 횟수 추가
+    // 로그인 실패 횟수 추가(DB에 값을 저장하는 경우에만 사용)
     public void failCount(int failCount, String mid) {
         try {
             sql = "update login set failCount=? where mid=?";

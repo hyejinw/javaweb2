@@ -82,9 +82,10 @@ public class LoginOkCommand implements LoginInterface {
           cookieMid.setMaxAge(0);
       }
       response.addCookie(cookieMid);
+      
       request.setAttribute("msg", mid+"님 로그인 되었습니다.");
-      request.setAttribute("url", request.getContextPath()+"/MemberMain.pa");
-        }
+      request.setAttribute("url", request.getContextPath()+"/MemberMain.fa");
+      }
         
         // 로그인 했을 때 DB에 값이 없는 경우
         else {
@@ -94,13 +95,13 @@ public class LoginOkCommand implements LoginInterface {
             // 회원 인증 실패 시 처리
             if(fail < 5) {
           request.setAttribute("msg", "로그인 "+fail+"회 실패.");
-          request.setAttribute("url", request.getContextPath()+"/Login.pa");                
+          request.setAttribute("url", request.getContextPath()+"/Login.fa");                
             }
  
             else {
                 session.setAttribute("sFail", 0);
                 request.setAttribute("msg", "로그인 인증 5회 실패.\\n비밀번호 찾기 페이지로 이동합니다.");
-                request.setAttribute("url", request.getContextPath()+"/Finder.pa");                
+                request.setAttribute("url", request.getContextPath()+"/Finder.fa");                
             }        
         }
     }

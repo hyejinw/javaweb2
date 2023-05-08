@@ -18,7 +18,7 @@
 		'use strict';	
 	  function deleteCheck() {
 		  let ans = confirm("정말 탈퇴하시겠습니까?");
-	  	if(ans) location.href = "${ctp}/database/DeleteOk";
+	  	if(ans) location.href = "${ctp}/DeleteOk.fa";
 	  }
 	
 	</script>
@@ -27,7 +27,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container">
-	<h2>개별 회원 조회</h2>	
+	<h2>개별 회원 조회 3</h2>	
 	<table class="table table-bordered">
 		<tr>
 			<th>고유번호</th>
@@ -60,9 +60,9 @@
 	</table>
 	<br/>
 	<p>
-		<a href="${ctp}/study/0428_database/memberMain.jsp" class="btn btn-success mr-2">돌아가기</a>
+		<a href="${ctp}/MemberMain.fa" class="btn btn-success mr-2">돌아가기</a>
 		<c:if test="${sMid == vo.mid}">
-			<a href="${ctp}/database/Update" class="btn btn-success mr-2">정보수정</a>
+			<a href="${ctp}/Update.fa" class="btn btn-success mr-2">정보수정</a>
 			<a href="javascript:deleteCheck()" class="btn btn-success mr-2">회원 탈퇴</a>
 			<!-- a태그에 함수 부르는 방법 -->
 		</c:if>

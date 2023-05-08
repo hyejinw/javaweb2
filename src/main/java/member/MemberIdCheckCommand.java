@@ -19,7 +19,7 @@ public class MemberIdCheckCommand implements MemberInterface {
 			request.setAttribute("res", 1);   // 사용 가능한 아이디
 		}
 		else {
-			request.setAttribute("res", 0);   // 사용 불가능한 아이디
+			request.setAttribute("res", 0);   // 이미 사용 중인 아이디
 		}
 		request.setAttribute("mid", mid);
 	}

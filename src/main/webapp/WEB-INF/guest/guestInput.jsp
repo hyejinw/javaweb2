@@ -13,7 +13,7 @@
 <jsp:include page="/include/header.jsp" />
 <p><br/></p>
 <div class="container">
-  <h2 class="text-center">방명록 글올리기</h2>
+  <h2 class="text-center">방명록 글 올리기</h2>
   <form name="myform" method="post" action="${ctp}/GuestInputOk.gu" class="was-validated">
     <div class="form-group">
       <label for="name">성명</label>

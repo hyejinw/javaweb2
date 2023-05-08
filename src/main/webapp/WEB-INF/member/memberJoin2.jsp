@@ -16,19 +16,51 @@
 	<script src="${ctp}/js/joinCheck.js"></script> 
 	<script>
 		'use strict';
+
+		function alert(msg) {
+			Swal.fire({"title":msg, "timer": 2000});
+		}
 		
 		// 아이디 중복 검사 
 		function idCheck() {
 			let mid = myform.mid.value;
 			let url = "${ctp}/MemberIdCheck.mem?mid="+mid;
 			
-			if(mid.trim() == "") {
-				alert("아이디를 입력하세요");
-				myform.mid.focus();
-			}
-			else {
-				window.open(url, "nWin", "width=580px, height=250px");
-			}
+			Swal.fire({
+				  title: '아이디 중복 확인창',
+				  input: 'text',
+				  inputAttributes: {
+				    autocapitalize: 'off'
+				  },
+				  showCancelButton: true,
+				  confirmButtonText: '확인',
+				  cancelButtonText: '취소',
+				  reverseButtons: true,
+				  showLoaderOnConfirm: true,
+				  preConfirm: () => {
+				    return fetch(`//api.github.com/users/${login}`)
+				      .then(response => {
+				        if (!response.ok) {
+				          throw new Error(response.statusText)
+				        }
+				        return response.json()
+				      })
+				      .catch(error => {
+				        Swal.showValidationMessage(
+				          `이미 사용 중인 아이디입니다.`
+				        )
+				      })
+				  },
+				  allowOutsideClick: () => !Swal.isLoading()
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    Swal.fire({
+				      title: `${result.value.login}'s avatar`,
+				      imageUrl: result.value.avatar_url
+				    })
+				  }
+				})
+
 		}
 		// 닉네임 중복 검사  
 		function nickCheck() {
@@ -44,22 +76,6 @@
 			}
 		}
 		
-		// 전화번호 길이 제한
-		function handleOnInput(el, maxlength) {
-		  if(el.value.length > maxlength)  {
-		    el.value 
-		      = el.value.substr(0, maxlength);
-		  }
-		}
-		
-		// 첫 번째 전화번호 내용 입력 후 자동으로 커서 옮기기
-		$(document).ready(function() {
-	    $(".inputs").keyup(function () {
-        if (this.value.length == this.maxLength) {
-          $(this).next('.inputs').focus();
-        }
-	    });
-		});		
 	</script>
 	<style>
 		.text-primary {
@@ -153,10 +169,8 @@
               <option value="062">광주</option>
             </select>-
         </div>
-        <input type="number" name="tel2" size=4 maxlength=4 oninput='handleOnInput(this, 4)' class="form-control inputs"/>-
-        <input type="number" name="tel3" size=4 maxlength=4 oninput='handleOnInput(this, 4)' class="form-control inputs"/>
-<!--         <input type="text" name="tel2" size=4 maxlength=4 class="form-control"/>-
-        <input type="text" name="tel3" size=4 maxlength=4 class="form-control"/> -->
+        <input type="text" name="tel2" maxlength='4' class="form-control"/>-
+        <input type="text" name="tel3" maxlength='4' class="form-control"/>
       </div>
     </div>
     <div class="form-group">

@@ -19,11 +19,8 @@ public class LogoutCommand implements LoginInterface {
         // 로그아웃 후에는 session에 저장된 모든 값을 지워버린다.
         session.invalidate();
         
-        String msg = mid+"님 로그아웃 되었습니다.";
-        String url = "/Login.fa";
-        
-        request.setAttribute("msg", msg);
-        request.setAttribute("url", request.getContextPath() + url);
+        request.setAttribute("msg", mid+"님 로그아웃 되었습니다.");
+        request.setAttribute("url", request.getContextPath() + "/Login.fa");
     }
 }
  

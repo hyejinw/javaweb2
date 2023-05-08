@@ -8,7 +8,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>memberIdCheck.jsp</title>
 	<jsp:include page="/include/bs4.jsp"/> 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  <!-- sweetalert -->
 	<script>
 		'use strict';
 		
@@ -35,7 +34,7 @@
 <div class="container">	
 	<h3>아이디 체크폼</h3>
 	<c:if test="${res == 1}">
-		<h4><font color="blue"><b>${mid}</b></font> 아이디는 중복되지 않았습니다.</h4>
+		<h4><font color="blue"><b>${mid}</b></font> 아이디는 중복되지 않습니다.</h4>
 		<p><input type="button" value="창 닫기" onclick="sendCheck()"/></p>
 	</c:if>
 	<c:if test="${res != 1}">
