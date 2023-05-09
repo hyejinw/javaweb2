@@ -26,151 +26,199 @@ public class MemberVO {
 	private int todayCnt;
 	
 	private String salt;
-	
-	int getIdx() {
+
+	public int getIdx() {
 		return idx;
 	}
-	void setIdx(int idx) {
+
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
-	String getMid() {
+
+	public String getMid() {
 		return mid;
 	}
-	void setMid(String mid) {
+
+	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	String getPwd() {
+
+	public String getPwd() {
 		return pwd;
 	}
-	void setPwd(String pwd) {
+
+	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	String getNickName() {
+
+	public String getNickName() {
 		return nickName;
 	}
-	void setNickName(String nickName) {
+
+	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	String getName() {
+
+	public String getName() {
 		return name;
 	}
-	void setName(String name) {
+
+	public void setName(String name) {
 		this.name = name;
 	}
-	String getGender() {
+
+	public String getGender() {
 		return gender;
 	}
-	void setGender(String gender) {
+
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	String getBirthday() {
+
+	public String getBirthday() {
 		return birthday;
 	}
-	void setBirthday(String birthday) {
+
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	String getTel() {
+
+	public String getTel() {
 		return tel;
 	}
-	void setTel(String tel) {
+
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	String getAddress() {
+
+	public String getAddress() {
 		return address;
 	}
-	void setAddress(String address) {
+
+	public void setAddress(String address) {
 		this.address = address;
 	}
-	String getEmail() {
+
+	public String getEmail() {
 		return email;
 	}
-	void setEmail(String email) {
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	String getHomePage() {
+
+	public String getHomePage() {
 		return homePage;
 	}
-	void setHomePage(String homePage) {
+
+	public void setHomePage(String homePage) {
 		this.homePage = homePage;
 	}
-	String getJob() {
+
+	public String getJob() {
 		return job;
 	}
-	void setJob(String job) {
+
+	public void setJob(String job) {
 		this.job = job;
 	}
-	String getHobby() {
+
+	public String getHobby() {
 		return hobby;
 	}
-	void setHobby(String hobby) {
+
+	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}
-	String getPhoto() {
+
+	public String getPhoto() {
 		return photo;
 	}
-	void setPhoto(String photo) {
+
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	String getContent() {
+
+	public String getContent() {
 		return content;
 	}
-	void setContent(String content) {
+
+	public void setContent(String content) {
 		this.content = content;
 	}
-	String getUserInfor() {
+
+	public String getUserInfor() {
 		return userInfor;
 	}
-	void setUserInfor(String userInfor) {
+
+	public void setUserInfor(String userInfor) {
 		this.userInfor = userInfor;
 	}
-	String getUserDel() {
+
+	public String getUserDel() {
 		return userDel;
 	}
-	void setUserDel(String userDel) {
+
+	public void setUserDel(String userDel) {
 		this.userDel = userDel;
 	}
-	int getPoint() {
+
+	public int getPoint() {
 		return point;
 	}
-	void setPoint(int point) {
+
+	public void setPoint(int point) {
 		this.point = point;
 	}
-	int getLevel() {
+
+	public int getLevel() {
 		return level;
 	}
-	void setLevel(int level) {
+
+	public void setLevel(int level) {
 		this.level = level;
 	}
-	int getVisitCnt() {
+
+	public int getVisitCnt() {
 		return visitCnt;
 	}
-	void setVisitCnt(int visitCnt) {
+
+	public void setVisitCnt(int visitCnt) {
 		this.visitCnt = visitCnt;
 	}
-	String getStartDate() {
+
+	public String getStartDate() {
 		return startDate;
 	}
-	void setStartDate(String startDate) {
+
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	String getLastDate() {
+
+	public String getLastDate() {
 		return lastDate;
 	}
-	void setLastDate(String lastDate) {
+
+	public void setLastDate(String lastDate) {
 		this.lastDate = lastDate;
 	}
-	int getTodayCnt() {
+
+	public int getTodayCnt() {
 		return todayCnt;
 	}
-	void setTodayCnt(int todayCnt) {
+
+	public void setTodayCnt(int todayCnt) {
 		this.todayCnt = todayCnt;
 	}
-	String getSalt() {
+
+	public String getSalt() {
 		return salt;
 	}
-	void setSalt(String salt) {
+
+	public void setSalt(String salt) {
 		this.salt = salt;
 	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
@@ -180,4 +228,5 @@ public class MemberVO {
 				+ visitCnt + ", startDate=" + startDate + ", lastDate=" + lastDate + ", todayCnt=" + todayCnt + ", salt=" + salt
 				+ "]";
 	}
+	
 }

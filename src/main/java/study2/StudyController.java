@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import study2.uuid.UuidCommand;
+
 @SuppressWarnings("serial")
 @WebServlet("*.st")
 public class StudyController extends HttpServlet {
@@ -40,6 +42,34 @@ public class StudyController extends HttpServlet {
 			command = new UuidCommand();
 			command.execute(request, response);
 			viewPage += "/uuid/uuidOk.jsp";
+		}
+		else if(com.equals("/AjaxTest1")) {
+			viewPage += "/ajax/ajaxTest1.jsp";
+		}
+		else if(com.equals("/UserList")) {
+			command = new UserListCommand();
+			command.execute(request, response);
+			viewPage += "/ajax2/userList.jsp";
+		}
+		else if(com.equals("/UserInput")) {
+			command = new UserInputCommand();
+			command.execute(request, response);
+			return; // 돌려보내면 안 된다.
+		}
+		else if(com.equals("/UserDelete")) {
+			command = new UserDeleteCommand();
+			command.execute(request, response);
+			return; // 돌려보내면 안 된다.
+		}
+		else if(com.equals("/UserSearch")) {
+			command = new UserSearchCommand();
+			command.execute(request, response);
+			return; // 돌려보내면 안 된다.
+		}
+		else if(com.equals("/UserUpdate")) {
+			command = new UserUpdateCommand();
+			command.execute(request, response);
+			return; // 돌려보내면 안 된다.
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
