@@ -51,7 +51,7 @@
 	      </li>   
 	      <li>
 				  <div class="dropdown">
-				    <button type="button" class="btn text-light dropdown-toggle" data-toggle="dropdown">Information</button>
+				    <button type="button" class="btn text-light dropdown-toggle" data-toggle="dropdown">My Page</button>
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="${ctp}/MemberMain.mem">회원정보</a>
 				      <a class="dropdown-item" href="#">회원정보수정</a>

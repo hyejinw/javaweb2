@@ -1,4 +1,4 @@
-package study2;
+package study2.ajax2;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,8 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
-import study2.ajax2.UserDAO;
-import study2.ajax2.UserVO;
+import study2.StudyInterface;
 
 public class UserSearchCommand implements StudyInterface {
 

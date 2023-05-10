@@ -1,4 +1,4 @@
-package study2;
+package study2.ajax2;
 
 import java.io.IOException;
 
@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import study2.ajax2.UserDAO;
-import study2.ajax2.UserVO;
+import study2.StudyInterface;
 
 public class UserUpdateCommand implements StudyInterface {
 

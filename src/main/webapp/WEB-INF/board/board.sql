@@ -17,13 +17,32 @@ create table board (
 	
 );
 
+/* 게시판에 댓글 달기 */
+create table boardReply (
+	idx int not null auto_increment,        /* 댓글의 고유번호 */
+	boardIdx int not null,                  /* 원본 글의 고유번호(외래키로 지정) */
+	mid varchar(20) not null,							  /* 댓글 올린이의 아이디 */
+	nickName varchar(20) not null,				  /* 댓글 올린이의 닉네임, 왜 두 개? 닉네임은 변경가능하니까! */
+	wDate datetime default now(),           /* 댓글 올린 날짜 */
+	hostIp varchar(50) not null,            /* 댓글 올린 pc의 고유 IP */
+	content text not null,                  /* 내용 */
+	
+	primary key(idx),
+	foreign key(boardIdx) references board(idx)    /* 외래키 설정: 반드시 고유한 키여야만 한다. */
+	on update cascade															 /* 원본의 변경을 따라간다. */
+	on delete restrict                             /* 원본의 idx를 삭제해도 기본의 값은 유지하게 한다. */
+);
+
+
 desc board;
+desc boardReply;
 
 insert into board values (default,'admin','관리맨','게시판 서비스 시작합니다.','secret@secret.com','somewhere.lulook@naver.com','이곳은 게시판입니다.',default,'192.168.50.83',default,default,default);
 
 select* from board;
 
 drop table board;
+
 
 /* 날짜 함수 처리 연습 */
 select now();  /*오늘 날짜*/
@@ -85,4 +104,13 @@ select *,timestampdiff(second, wDate, now()) as second_diff from board;
 /* 날짜양식(date_format()) : (4자리)년(%Y), (2자리)년(%y), 월(%m), 일(%d) */
 select wDate, date_format(wDate, '%Y-%m-%d %H:%i') as English from board;
 select wDate, date_format(wDate, '%Y-%m-%d %H:%i') as '수정 후' from board;
+
+
+/* 이전글, 다음글 꺼내오기 */
+select * from board;
+select * from board where idx=5;
+select * from board where idx < 5 order by idx desc limit 1;
+select * from board where idx > 5 limit 1;
+select idx, title from board where idx < 5 order by idx desc limit 1;
+select idx, title from board where idx > 5 limit 1;
 

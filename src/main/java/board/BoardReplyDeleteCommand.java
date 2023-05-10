@@ -1,4 +1,4 @@
-package study2;
+package board;
 
 import java.io.IOException;
 
@@ -6,18 +6,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import study2.ajax2.UserDAO;
-
-public class UserDeleteCommand implements StudyInterface {
+public class BoardReplyDeleteCommand implements BoardInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idx = request.getParameter("idx")==null ? 0: Integer.parseInt(request.getParameter("idx"));
+		int replyIdx = request.getParameter("replyIdx")==null? 0: Integer.parseInt(request.getParameter("replyIdx"));
 		
-		UserDAO dao = new UserDAO();
-		String res = dao.setUserDelete(idx);
-
+		BoardDAO dao = new BoardDAO();
+		String res = dao.setReplyDeleteOk(replyIdx);
 		response.getWriter().write(res);
-	}
 
+	}
 }
