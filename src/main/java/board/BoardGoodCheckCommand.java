@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 public class BoardGoodCheckCommand implements BoardInterface {
 //세션으로 좋아요 수 중복 방지
+	@SuppressWarnings("unchecked")
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = request.getParameter("idx")==null ? 0: Integer.parseInt(request.getParameter("idx"));
@@ -17,7 +18,7 @@ public class BoardGoodCheckCommand implements BoardInterface {
 		
 		// 글 좋아요 1회 증가시키기("'boardGood'+고유번호" 값을 객체배열(ArrayList)에 담았다.)
 		HttpSession session = request.getSession();
-		ArrayList<String> goodIdx = (ArrayList) session.getAttribute("sGoodIdx");
+		ArrayList<String> goodIdx = (ArrayList<String>) session.getAttribute("sGoodIdx");
 		
 		// 처음엔 없을 거니까! 만들어주자!
 		if(goodIdx == null) {

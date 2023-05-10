@@ -45,7 +45,6 @@ public class BoardDeleteCommand implements BoardInterface {
 			request.setAttribute("msg", "게시글이 삭제되지 못했습니다.");
 			request.setAttribute("url", request.getContextPath() + "/BoardContent.bo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);
 		}				
-
 	}
 
 }

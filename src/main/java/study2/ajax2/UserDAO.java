@@ -127,7 +127,7 @@ public class UserDAO {
 		return vo;
 	}
 
-	// 게시글 수정
+	// 회원 수정
 	public String setUpdate(UserVO vo, String sMid) {
 		String res = "0";
 		try {

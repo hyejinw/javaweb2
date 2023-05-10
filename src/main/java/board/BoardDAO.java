@@ -202,7 +202,8 @@ public class BoardDAO {
 	public ArrayList<BoardVO> getBoardContentSearch(String search, String searchString) {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		try {
-			sql = "select * from board where "+search+" like ? order by idx desc";
+			sql = "select *,timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff"
+					+ " from board where "+search+" like ? order by idx desc";
 			pstmt = conn.prepareStatement(sql);      
 			pstmt.setString(1, "%"+searchString+"%");   // ?는 변수가 아닌 '값'에만!!! 넣는 것이다!!!!!
 			rs = pstmt.executeQuery();
@@ -220,7 +221,13 @@ public class BoardDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.setOpenSw(rs.getString("openSw"));
 				vo.setwDate(rs.getString("wDate"));
-				vo.setGood(rs.getInt("good"));				
+				vo.setGood(rs.getInt("good"));	
+				
+				// 게시글 시간 차이 계산용
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				// 게시글 날짜 차이 계산용
+				vo.setDay_diff(rs.getInt("day_diff"));
+				
 				vos.add(vo);
 			}
 			
@@ -324,7 +331,6 @@ public class BoardDAO {
 		} finally {
 			getConn.rsClose();
 		}
-		
 		return replyVos;
 	}
 

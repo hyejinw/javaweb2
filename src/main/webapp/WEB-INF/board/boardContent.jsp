@@ -41,14 +41,17 @@
   			$("#content").focus();
   			return false;
   		}
-  		let query = {
+  		
+  		/* 자바스크립트에서 객체를 만드는 방법이다. */
+  		let query = {   
   				boardIdx : ${vo.idx},
   				mid : '${sMid}',
   				nickName : '${sNickName}',
   				content : content,
   				hostIp : '${pageContext.request.remoteAddr}'
-/*   				hostIp : '${pageContext.request.getRemoteAddr()}' */
+			/*  hostIp : '<%=request.getRemoteAddr() %>' 와 같은 표현이다.*/
   		}
+  		
   		$.ajax({
   			type : 'post',
   			url : '${ctp}/BoardReplyInput.bo',
@@ -195,7 +198,7 @@
   <form name="replyForm">
   	<table class="table table-center">
   		<tr>
-  			<td style="width:85%" class="text-left">
+  			<td style="width:85%" class="text-left">   <!-- 이렇게 비율로 설정해주면 반응형으로 바뀐다.+ -->
   				댓글 : 
   				<textarea rows="4" name="content" id="content" class="form-control"></textarea>
   			</td>

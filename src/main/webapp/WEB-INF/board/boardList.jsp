@@ -135,7 +135,7 @@
   	<form name="searchForm" method="post" action="${ctp}/BoardSearch.bo">
   		<b>검색 : </b>
   		<select name="search">
-  			<option value="title" selected>제목</option>
+  			<option value="title" selected>제목</option>   <!-- 이렇게 미리 value를 주면 back에서 처리할 때 편하다. -->
   			<option value="nickName">글쓴이</option>
   			<option value="content">내용</option>
   		</select>

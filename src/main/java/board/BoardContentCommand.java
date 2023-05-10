@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
 public class BoardContentCommand implements BoardInterface {
 // 세션으로 조회수 중복 방지
+	@SuppressWarnings("unchecked")
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = request.getParameter("idx")==null ? 0: Integer.parseInt(request.getParameter("idx"));
@@ -27,7 +26,7 @@ public class BoardContentCommand implements BoardInterface {
 		
 		// 글 조회수 1회 증가시키기("'board'+고유번호" 값을 객체배열(ArrayList)에 담았다.)
 		HttpSession session = request.getSession();
-		ArrayList<String> contentIdx = (ArrayList) session.getAttribute("sContentIdx");
+		ArrayList<String> contentIdx = (ArrayList<String>) session.getAttribute("sContentIdx");   // 타입을 변경해줘야 한다.
 		
 		// 처음엔 없을 거니까! 만들어주자!
 		if(contentIdx == null) {
@@ -43,19 +42,20 @@ public class BoardContentCommand implements BoardInterface {
 		session.setAttribute("sContentIdx", contentIdx);
 
 		
-		// 현재 선택된 게시글(idx)의 내용을 가져오기
+		// 현재 선택된 게시글(idx)의 내용을 가져오기 + request에 저장
 		BoardVO vo = dao.getBoardContent(idx);
 		request.setAttribute("vo", vo);
 		request.setAttribute("pag", pag);
 		request.setAttribute("pageSize", pageSize);
 		
-		// 이전글, 다음글(idx, title) 가져오기
+		
+		// 이전글, 다음글(idx, title) 가져오기 + request에 저장
 		BoardVO preVo = dao.getPreNextSearchContent(idx, "preVo");
 		BoardVO nextVo = dao.getPreNextSearchContent(idx, "nextVo");
-		
 		request.setAttribute("preVo", preVo);
 		request.setAttribute("nextVo", nextVo);
 		
+		// for/ BoardSearch(검색 기능을 마치고 돌아가기 기능 보강)
 		request.setAttribute("flag", flag);
 		request.setAttribute("search", search);
 		request.setAttribute("searchString", searchString);

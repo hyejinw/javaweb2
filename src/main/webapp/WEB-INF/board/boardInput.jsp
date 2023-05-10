@@ -72,7 +72,7 @@
 				</td>
 			</tr>		
 		</table>
-		<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" /> <%-- <%=request.getRemoteAddr() 와 같은 표현이다. %> --%>
+		<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" /> <%-- <%=request.getRemoteAddr()%>  와 같은 표현이다.--%>
 	</form>
 </div>	
 <P><br /></P>
