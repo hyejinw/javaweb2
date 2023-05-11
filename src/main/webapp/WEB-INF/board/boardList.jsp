@@ -27,7 +27,7 @@
     	let level = '<%=String.valueOf(session.getAttribute("sLevel")) %>';
     	console.log("level : " + level);
     	if(level == "1") {
-    		alert('정회원부터 글 작성이 가능합니다.\n정회원 등업 조건: 방명록 글 작성 5회, 방문 5회 이상');
+    		alert('정회원부터 글 작성이 가능합니다.\n정회원 등업 조건: 방명록 글 작성 5회, 방문 10회 이상');
     	}
     	else {
     		location.href = "${ctp}/BoardInput.bo";
