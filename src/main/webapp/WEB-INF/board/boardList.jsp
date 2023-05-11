@@ -84,7 +84,7 @@
 				<%-- <td>${vo.idx}</td> --%>
 				<td>${curScrStartNo}</td>
 				<c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
-				<td>
+				<td class="text-left">
 					<c:if test="${vo.openSw == 'OK' || sLevel == 0 || sMid == vo.mid}">
 						<a href="${ctp}/BoardContent.bo?idx=${vo.idx}&pageSize=${pageSize}&pag=${pag}">${vo.title}</a>
 						<c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif"/></c:if>
@@ -93,6 +93,9 @@
 					<c:if test="${vo.openSw != 'OK' && sLevel != 0 && sMid != vo.mid}">
 						${vo.title}
 					</c:if>
+					<!-- 댓글이 있을 때만 괄호() 안에 댓글 개수 추가 -->
+					<c:if test="${vo.replyCount != 0}">(${vo.replyCount})</c:if>
+					
 				</td>
 				<td>${vo.nickName}</td>
 				<td>
@@ -120,12 +123,12 @@
   <div class="text-center">
   	<ul class="pagination justify-content-center pagination-sm">
 	    <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=1">◁◁</a></li></c:if>
-	    <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li></c:if>
+	    <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">◀</a></li></c:if>
 	    <c:forEach var="i" begin="${curBlock*blockSize + 1}" end="${curBlock*blockSize + blockSize}" varStatus="st">
 	      <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link text-white bg-secondary border-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
 	      <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
 	    </c:forEach>
-	    <c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li></c:if>
+	    <c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${(curBlock+1)*blockSize + 1}">▶</a></li></c:if>
 	    <c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pageSize=${pageSize}&pag=${totPage}">▷▷</a></li></c:if>
  		</ul>
   </div>

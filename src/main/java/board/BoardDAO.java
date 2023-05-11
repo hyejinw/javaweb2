@@ -19,13 +19,17 @@ public class BoardDAO {
 	
 	BoardVO vo = null;
 
-	// 게시글 전체 조회처리
+	// 게시글 전체 조회처리 + 댓글 조회도 추가!
 	public ArrayList<BoardVO> getBoardList(int startIndexNo, int pageSize) {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		try {
 			//sql = "select * from board order by idx desc limit ?,?";
-			sql = "select *,timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff"
-					+ " from board order by idx desc limit ?,?";
+			//sql = "select *, timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff"
+			//		+ " from board order by idx desc limit ?,?";
+			
+			sql = "select *, timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff, "
+					+ "(select count(*) from boardReply where boardIdx = b.idx) as replyCount "
+					+ "from board b order by idx desc limit ?,?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
@@ -51,6 +55,9 @@ public class BoardDAO {
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				// 게시글 날짜 차이 계산용
 				vo.setDay_diff(rs.getInt("day_diff"));
+				
+				// 댓글 조회 기능
+				vo.setReplyCount(rs.getInt("replyCount"));
 				
 				vos.add(vo);
 			}

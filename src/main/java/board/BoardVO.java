@@ -1,5 +1,13 @@
 package board;
 
+/**
+ * @author green
+ *
+ */
+/**
+ * @author green
+ *
+ */
 public class BoardVO {
 	private int idx;
 	private String mid;
@@ -26,6 +34,8 @@ public class BoardVO {
 	private String preTitle;
 	private String nextTitle;
 	
+	// 댓글 개수
+	private int replyCount;
 	
 	public int getIdx() {
 		return idx;
@@ -135,12 +145,19 @@ public class BoardVO {
 	public void setNextTitle(String nextTitle) {
 		this.nextTitle = nextTitle;
 	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", title=" + title + ", email=" + email
 				+ ", homePage=" + homePage + ", content=" + content + ", readNum=" + readNum + ", hostIp=" + hostIp
 				+ ", openSw=" + openSw + ", wDate=" + wDate + ", good=" + good + ", hour_diff=" + hour_diff + ", day_diff="
 				+ day_diff + ", preIdx=" + preIdx + ", nextIdx=" + nextIdx + ", preTitle=" + preTitle + ", nextTitle="
-				+ nextTitle + "]";
+				+ nextTitle + ", replyCount=" + replyCount + "]";
 	}
+
 }

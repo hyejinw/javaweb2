@@ -187,7 +187,8 @@
   					${replyVo.nickName}
   				</td>
   				<td>${fn: replace(replyVo.content, newLine, "<br/>")}</td>
-  				<td class="text-center">${fn: replace(replyVo.wDate,0,10)}</td>
+  				<%-- <td class="text-center">${fn: replace(replyVo.wDate,0,fn:length(replyVo.wDate))}</td> --%>
+  				<td class="text-center">${fn: substring (replyVo.wDate,0,10)}</td>
   				<td class="text-center">${replyVo.hostIp}</td>
   			</tr>
   		</c:forEach>
