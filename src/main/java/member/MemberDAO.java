@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import conn.GetConn;
+import guest.GuestVO;
 
 public class MemberDAO {
 
@@ -175,13 +176,33 @@ public class MemberDAO {
 		}
 		return vo;
 	}
+	
+	// 총 회원 수 구하기 (from/ MemberListCommand)
+	public int getTotRecCnt() {
+		int totRecCnt = 0;
+		try {
+			sql = "select count(*) as cnt from member";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return totRecCnt;
+	}
 
-	// 회원 전체 리스트
-	public ArrayList<MemberVO> getMemberList() {
+	// 회원 전체 리스트 (from/ MemberListCommand)
+	public ArrayList<MemberVO> getMemberList(int startIndexNo, int pageSize) {
 		ArrayList<MemberVO> vos = new ArrayList<>();
 		try {
-			sql = "select * from member order by idx desc";
+			sql = "select * from member order by idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startIndexNo);
+			pstmt.setInt(2, pageSize);			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -221,5 +242,96 @@ public class MemberDAO {
 		return vos;
 	}
 	
+	// 특정 회원의 총 레코드 건수 구하기 (from/ MemberMainCommand)
+	// 1. 작성한 방명록 글 총 개수 구하기 (아이디, 닉네임이 같으면 본인이 쓴 글) (성명은 제외시켰다. 중복이 가능하기 때문!)
+	public int getGuestList(String mid, String nickName) {
+		int guestCnt = 0;
+		try {
+			sql = "select count(idx) as cnt from guest where name in(?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, nickName);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			guestCnt = rs.getInt("cnt");
+
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return guestCnt;
+	}
+
+	
+	// 2. 작성한 게시판 글 총 개수 구하기 (아이디가 같으면 본인이 쓴 글)
+	public int getBoardList(String mid) {
+		int boardCnt = 0;
+		try {
+			sql = "select count(idx) as cnt from board where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			boardCnt = rs.getInt("cnt");
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류xx : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return boardCnt;
+	}
+
+	
+	// 특정 회원의 방명록 전체 보기 (from/ MemberGuestListCommand)(성명은 중복이 될 수 있으니, 작성자 검색에 사용하지 않겠다.)
+	public ArrayList<GuestVO> getMemberGuestList(int startIndexNo, int pageSize, String mid, String nickName) {
+		ArrayList<GuestVO> vos = new ArrayList<>();
+		try {
+			sql = "select * from guest where name in(?, ?) order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, nickName);			
+			pstmt.setInt(3, startIndexNo);
+			pstmt.setInt(4, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				GuestVO vo = new GuestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setName(rs.getString("name"));
+				vo.setEmail(rs.getString("email"));
+				vo.setHomePage(rs.getString("homePage"));
+				vo.setContent(rs.getString("content"));
+				vo.setVisitDate(rs.getString("visitDate"));
+				vo.setHostIp(rs.getString("hostip"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vos;
+	}
+
+	// 준회원에서 정회원으로 등업하기
+	public void setLevelUpdate(String mid) {
+		try {
+      sql = "update member set level=2 where mid=?";
+      pstmt = conn.prepareStatement(sql);
+  		pstmt.setString(1, mid);
+ 	  	pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 에러 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
 	
 }

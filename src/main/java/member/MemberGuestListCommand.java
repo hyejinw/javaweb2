@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import guest.GuestDAO;
 import guest.GuestVO;
 
 public class MemberGuestListCommand implements MemberInterface {
@@ -20,9 +19,8 @@ public class MemberGuestListCommand implements MemberInterface {
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo = dao.getMemberMidCheck(mid);
 		
-		// 특정 회원의 총 레코드 건수 구하기
-		GuestDAO dao2 = new GuestDAO();
-		int res = dao2.getList(vo.getMid(), vo.getName(), vo.getNickName());
+		// 특정 회원의 총 방명록 건수 구하기
+		int res = dao.getGuestList(vo.getMid(), vo.getNickName());
 		request.setAttribute("res", res);
 		
 		// 1. 현재 페이지번호를 구한다.
@@ -55,7 +53,7 @@ public class MemberGuestListCommand implements MemberInterface {
 		int lastBlock = (totPage - 1) / blockSize;
 		
 		// 지정된 페이지의 자료를 요청한 한페이지 분량만큼 가져온다.
-		ArrayList<GuestVO> vos = dao2.getMemberGuestList(startIndexNo, pageSize, vo.getMid(), vo.getName(), vo.getNickName());
+		ArrayList<GuestVO> vos = dao.getMemberGuestList(startIndexNo, pageSize, vo.getMid(), vo.getNickName());
 		
 		request.setAttribute("vos", vos);
 		request.setAttribute("pag", pag);

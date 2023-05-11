@@ -17,6 +17,24 @@
   <script>
     'use strict';
     
+    // 준회원이면 글쓰기 불가
+    function writeCheck() {
+    	
+    	/* 23번처럼 강제 캐스팅하면 500번 오류가 생긴다. */
+    	<%-- let level = '<%=(String) session.getAttribute("sLevel") %>';     --%>	
+    	
+    	
+    	let level = '<%=String.valueOf(session.getAttribute("sLevel")) %>';
+    	console.log("level : " + level);
+    	if(level == "1") {
+    		alert('정회원부터 글 작성이 가능합니다.\n정회원 등업 조건: 방명록 글 작성 5회, 방문 5회 이상');
+    	}
+    	else {
+    		location.href = "${ctp}/BoardInput.bo";
+    	}
+    }
+    
+    
     function pageCheck() {
     	let pageSize = document.getElementById("pageSize").value;
     	location.href = "${ctp}/BoardList.bo?pag=${pag}&pageSize="+pageSize;
@@ -54,7 +72,11 @@
 		</tr>
 		<tr>
 			<td>
-				<a href="${ctp}/BoardInput.bo" class="btn btn-primary btn-sm">글쓰기</a>
+				<!--방법1) 준회원은 글쓰기 불가 -->
+				<a href="javascript:writeCheck()" class="btn btn-primary btn-sm">글쓰기</a>
+<%-- 				<!--방법2) 준회원은 글쓰기 불가: 그냥 버튼 자체를 안 보이게 하기 -->
+				<c:if test="${sLevel != 1}"><a href="${ctp}/BoardInput.bo" class="btn btn-primary btn-sm">글쓰기</a></c:if> --%>
+				
 			</td>
 			<td class="text-right">
         <!-- 첫페이지 / 이전페이지 / (현재페이지번호/총페이지수) / 다음페이지 / 마지막페이지 -->

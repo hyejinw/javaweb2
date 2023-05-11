@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conn.SecurityUtil;
+import guest.GuestDAO;
 
 public class MemberLoginOkCommand implements MemberInterface {
 //로그인 오류 횟수를 session에 저장하고 뺀다. 
@@ -44,8 +45,18 @@ public class MemberLoginOkCommand implements MemberInterface {
 			return;
 		}
 
-		// 로그인 성공 시에 처리할 내용 (1.주요필드 세션에 저장 2.오늘 방문횟수 처리 3.총방문수와 방문포인트 4.쿠키 아이디저장)
+		// 로그인 성공 시에 처리할 내용 (1.회원 등업관련 1-1.주요필드 세션에 저장 2.오늘 방문횟수 처리 3.총방문수와 방문포인트 4.쿠키 아이디저장 )
 		// 1
+		// 준회원 -> 정회원 등업관련 (방명록 작성 5건 이상, 방문횟수 10회 이상)
+		if(vo.getLevel() == 1) {
+			int guestCnt = dao.getGuestList(vo.getMid(), vo.getNickName());
+			
+			if(guestCnt >= 5 && vo.getVisitCnt() >= 9) dao.setLevelUpdate(vo.getMid());
+			
+		}
+		vo = dao.getMemberMidCheck(mid);
+		
+		// 1-1
 		HttpSession session = request.getSession();
 		int fail = session.getAttribute("sFail") == null ? 0 : (int) session.getAttribute("sFail"); // 로그인 실패했을 때 쓸 거여!
 		session.setAttribute("sFail", fail);
@@ -53,7 +64,10 @@ public class MemberLoginOkCommand implements MemberInterface {
 		session.setAttribute("sMid", mid);
 		session.setAttribute("sNickName", vo.getNickName());
 		session.setAttribute("sLevel", vo.getLevel());
+		session.setAttribute("sLastDate", vo.getLastDate());
 
+	
+		
 		// 2 & 3
 		// 날짜 비교를 위한 초기 설정
 		Date today = new Date();

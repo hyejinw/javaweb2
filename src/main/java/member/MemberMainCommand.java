@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import guest.GuestDAO;
-
 public class MemberMainCommand implements MemberInterface {
 
 	@Override
@@ -35,9 +33,13 @@ public class MemberMainCommand implements MemberInterface {
 		
 		
 		// 특정 회원의 총 레코드 건수 구하기
-		// 작성한 방명록 글 총 개수 구하기 (아이디, 성명, 닉네임이 같으면 본인이 쓴 글)
-		GuestDAO dao2 = new GuestDAO();
-		int res = dao2.getList(vo.getMid(), vo.getName(), vo.getNickName());
-		request.setAttribute("res", res);
+		// 1. 작성한 방명록 글 총 개수 구하기 (아이디, 닉네임이 같으면 본인이 쓴 글) (성명은 제외시켰다. 중복이 가능하기 때문!)
+		int guestCnt = dao.getGuestList(vo.getMid(), vo.getNickName());
+		request.setAttribute("guestCnt", guestCnt);
+		
+		
+		// 2. 작성한 게시판 글 총 개수 구하기 (아이디가 같으면 본인이 쓴 글: 물론 board에는 작성자가 nickName으로 나온다. 다만 별명은 변경 가능하니까 아이디로 하겠다.)
+		int boardCnt = dao.getBoardList(vo.getMid());
+		request.setAttribute("boardCnt", boardCnt);
 	}
 }
