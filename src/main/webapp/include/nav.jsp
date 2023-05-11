@@ -55,8 +55,9 @@
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="${ctp}/MemberMain.mem">회원정보</a>
 				      <a class="dropdown-item" href="#">회원정보수정</a>
-				      <a class="dropdown-item" href="#">회원리스트</a>
+				      <a class="dropdown-item" href="${ctp}/MemberList.mem">회원리스트</a>
 				      <a class="dropdown-item" href="#">회원탈퇴</a>
+				      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="#">관리자메뉴</a></c:if>
 				    </div>
 				  </div>  
 	      </li> 

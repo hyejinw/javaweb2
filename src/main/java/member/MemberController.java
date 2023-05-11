@@ -78,6 +78,12 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/memberGuestList.jsp";
 		}
+		// 멤버 리스트
+		else if(com.equals("/MemberList")) {
+			command = new MemberListCommand();    // 함 
+			command.execute(request, response);
+			viewPage += "/memberList.jsp";
+		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
