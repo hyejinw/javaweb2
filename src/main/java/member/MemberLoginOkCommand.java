@@ -34,7 +34,8 @@ public class MemberLoginOkCommand implements MemberInterface {
 		SecurityUtil security = new SecurityUtil();
 		String shaPwd = security.encryptSHA256(pwd);
 
-		if (vo.getMid() == null) {
+		// 진짜 아이디가 없거나, 1개월 전에 탈퇴한 회원일 때
+		if (vo.getMid() == null || vo.getUserDel().equals("OK")) {
 			request.setAttribute("msg", "입력한 아이디는 없는 회원입니다.");
 			request.setAttribute("url", request.getContextPath() + "/MemberLogin.mem");
 			return;
@@ -47,14 +48,15 @@ public class MemberLoginOkCommand implements MemberInterface {
 
 		// 로그인 성공 시에 처리할 내용 (1.회원 등업관련 1-1.주요필드 세션에 저장 2.오늘 방문횟수 처리 3.총방문수와 방문포인트 4.쿠키 아이디저장 )
 		// 1
-		// 준회원 -> 정회원 등업관련 (방명록 작성 5건 이상, 방문횟수 10회 이상)
-		if(vo.getLevel() == 1) {
-			int guestCnt = dao.getGuestList(vo.getMid(), vo.getNickName());
-			
-			if(guestCnt >= 5 && vo.getVisitCnt() >= 9) dao.setLevelUpdate(vo.getMid());
-			
-		}
-		vo = dao.getMemberMidCheck(mid);
+//		// 준회원 -> 정회원 등업관련 (방명록 작성 5건 이상, 방문횟수 10회 이상)
+//		  이걸 여기서 처리하면 등업확인을 위해 재로그인을 해야 하는 불편함이 있다! 그래서 10이 아닌 9로 둔 거지만 그래도! 프로그램 상 정확히 10이 됐을 때 정회원으로 바꾸는 게 더 좋은 것 같다.
+//		if(vo.getLevel() == 1) {
+//			int guestCnt = dao.getGuestList(vo.getMid(), vo.getNickName());
+//			
+//			if(guestCnt >= 5 && vo.getVisitCnt() >= 9) dao.setLevelUpdate(vo.getMid());
+//			
+//		}
+//		vo = dao.getMemberMidCheck(mid);
 		
 		// 1-1
 		HttpSession session = request.getSession();

@@ -97,6 +97,8 @@ select *,timestampdiff(hour, wDate, now()) as hour_diff from board order by idx 
 select *,timestampdiff(hour, wDate, now()) as hour_diff from board order by idx desc limit 0, 5;
 select *,timestampdiff(hour, wDate, now()) as hour_diff, datediff(now(), wDate) as day_diff from board order by idx desc limit 0, 5;
 
+select timestampdiff(day,'2023-05-01', now());
+
 select *,timestampdiff(minute, wDate, now()) as minute_diff from board;
 select *,timestampdiff(second, wDate, now()) as second_diff from board;
 

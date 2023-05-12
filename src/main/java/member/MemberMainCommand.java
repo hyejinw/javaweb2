@@ -41,5 +41,13 @@ public class MemberMainCommand implements MemberInterface {
 		// 2. 작성한 게시판 글 총 개수 구하기 (아이디가 같으면 본인이 쓴 글: 물론 board에는 작성자가 nickName으로 나온다. 다만 별명은 변경 가능하니까 아이디로 하겠다.)
 		int boardCnt = dao.getBoardList(vo.getMid());
 		request.setAttribute("boardCnt", boardCnt);
+		
+		
+		// 준회원 자동등업처리(방문횟수 10이상 이면서 방명록에 글을 5개 이상 올렸을때는 정회원으로 등업처리한다.)
+		if(vo.getLevel()==1 && vo.getVisitCnt()>=10 && guestCnt >= 5) {
+			dao.setLevelUpCheck(mid, 2);
+			session.setAttribute("sLevel", 2);
+			request.setAttribute("strLevel", "정회원");
+		}
 	}
 }

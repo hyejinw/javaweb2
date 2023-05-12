@@ -22,7 +22,7 @@
     	
     	/* 23번처럼 강제 캐스팅하면 500번 오류가 생긴다. */
     	<%-- let level = '<%=(String) session.getAttribute("sLevel") %>';     --%>	
-    	
+    	/* let level = sessionStorage.getItem('sLevel') // 세션 가져오기 */
     	
     	let level = '<%=String.valueOf(session.getAttribute("sLevel")) %>';
     	console.log("level : " + level);

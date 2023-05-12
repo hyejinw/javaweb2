@@ -9,6 +9,10 @@
 	<title>memberList.jsp</title>
 	<jsp:include page="/include/bs4.jsp"/> 
 	<script>
+		'use strict';
+		
+		if(${pag} > ${totPage}) location.href="";
+	
     function pageCheck() {
     	let pageSize = document.getElementById("pageSize").value;
     	location.href = "${ctp}/MemberList.mem?pag=${pag}&pageSize="+pageSize;
@@ -57,7 +61,9 @@
 		</tr>	
 		<c:forEach var="vo" items="${vos}" varStatus="st">
 			<tr>
-				<td>${vo.idx}</td>
+				<td>${curScrStartNo}</td>
+				<c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
+<%-- 				<td>${vo.idx}</td> --%>
 				<td>${vo.mid}</td>
 				<td>${vo.nickName}</td>
 				<td>
