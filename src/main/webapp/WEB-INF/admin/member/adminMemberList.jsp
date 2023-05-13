@@ -115,12 +115,12 @@
         </td>
         <td>
           <c:if test="${vo.userDel == 'OK'}">
-       	  	<font color="red"><b>탈퇴신청</b></font>
+       	  	<font color="red"><b>탈퇴 신청</b></font>
        	  	<c:if test="${vo.deleteDiff >= 30}">
        	  		<a href="javascript:memberDelete(${vo.idx})"><span class="badge badge-pill badge-danger">❌</span></a>
        	  	</c:if> 
           </c:if>
-          <c:if test="${vo.userDel != 'OK'}">활동중</c:if>
+          <c:if test="${vo.userDel != 'OK'}">활동 중</c:if>
         </td>
       </tr>
     </c:forEach>
