@@ -56,7 +56,10 @@
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="#">URL매핑(디렉토리패턴)</a>
 				      <a class="dropdown-item" href="${pageContext.request.contextPath}/Login.fa">로그인연습3</a>
-				      <a class="dropdown-item" href="#">Link 3</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad1.st">싱글파일 업로드 연습</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad2.st">멀티파일 업로드 연습1</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad3.st">멀티파일 업로드 연습2</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad4.st">멀티파일 업로드 연습3</a>
 				    </div>
 				  </div>  
 	      </li>   

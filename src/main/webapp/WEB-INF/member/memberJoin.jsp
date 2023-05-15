@@ -75,13 +75,16 @@
 		  let pwd2 = document.getElementById("pwd2").value.trim();
 		  let nickName = document.getElementById("nickName").value.trim();
 		  let name = document.getElementById("name").value.trim();
-		  let email1 = document.getElementById("email1").value.trim();
-		  let email2 = document.getElementById("email2");
-		  let email = email1 + "@" + email2;
+		  
+    	let email1 = myform.email1.value.trim();
+    	let email2 = myform.email2.value;
+    	let email = email1 + "@" + email2;
+    	
 		  let tel1 = myform.tel1.value;
 		  let tel2 = myform.tel2.value;
 		  let tel3 = myform.tel3.value;
 		  let tel = tel1 + "-" + tel2 + "-" + tel3;
+		  
 		  let postcode = myform.postcode.value + " ";
 		  let roadAddress = myform.roadAddress.value + " ";
 		  let detailAddress = myform.detailAddress.value + " ";
@@ -247,7 +250,7 @@
     	<div id="nameError" class="text-primary"></div>
     </div>
     <div class="form-group">
-      <label for="email1" >Email address:</label>
+      <label for="email1" >이메일 :</label>
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Email을 입력하세요." name="email1" id="email1" required />
           <div class="input-group-append">
