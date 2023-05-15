@@ -183,6 +183,24 @@
 				check = true;
 			}
 		    
+		   
+		  // 파일 업로드 관련
+			let fName = document.getElementById("file").value;
+			let ext = fName.substring(fName.lastIndexOf(".")+1).toUpperCase();
+			let maxSize = 1024 * 1024 * 5; // 업로드 가능 파일은 5MByte까지
+			
+			if(fName.trim() == "") {
+				alert("업로드할 파일을 선택해주세요.");
+			}
+			let fileSize = document.getElementById("file").files[0].size;
+			
+			if(ext != "JPG" && ext != "GIF" && ext != "PNG") {
+				alert("업로드 가능한 파일은 'jpg/gif/png' 입니다.");
+			}
+			else if(fileSize > maxSize) {
+				alert("업로드할 파일의 최대용량은 5MByte 입니다.");
+			}
+		   
 		  
 		  if(!check){
 			  alert('입력된 값을 다시 확인해주세요.');
@@ -221,7 +239,7 @@
 <jsp:include page="/include/header.jsp"/>
 <P><br /></P>
 <div class="container" id="top">	
-	<form name="myform" method="post" action="${ctp}/MemberJoinOk.mem" class="was-validated">
+	<form name="myform" method="post" action="${ctp}/MemberJoinOk.mem" enctype="multipart/form-data" class="was-validated">
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">

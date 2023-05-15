@@ -7,37 +7,44 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import conn.SecurityUtil;
 
 public class MemberJoinOkCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		Date date = new Date();
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//		String now = formatter.format(date);
-//		System.out.println("now: "+ now);
+  
+		// 회원 사진 업로드 관련
+    String realPath = request.getServletContext().getRealPath("/images/pdstest");
+    int maxSize = 1024 * 1024 * 10;   
+    String encoding = "UTF-8";
 		
-		// 1. 값 가져오기
-		String mid = request.getParameter("mid")==null ? "":request.getParameter("mid");
-		String pwd = request.getParameter("pwd")==null ? "":request.getParameter("pwd");
-		String nickName = request.getParameter("nickName")==null ? "":request.getParameter("nickName");
-		String name = request.getParameter("name")==null ? "":request.getParameter("name");
-		String gender = request.getParameter("gender")==null ? "":request.getParameter("gender");
-		
-		//생일은 값이 null 왔다고 공백("")으로 보내면 오류가 생긴다. => (30번처럼 적어도 오류는 뜬다: 미해결) => 결국 form에서 기본값을 줬다.
-		//String birthday = request.getParameter("birthday")==null ? now : request.getParameter("birthday");
-		//System.out.println("birthday: "+ birthday);
-		String birthday = request.getParameter("birthday")==null ? "" : request.getParameter("birthday");
+    // 파일 업로드처리.....(객체가 생성되면서 파일이 업로드처리된다.)
+    MultipartRequest multi = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
 
-		String tel = request.getParameter("tel")==null ? "":request.getParameter("tel");
-		String address = request.getParameter("address")==null ? "":request.getParameter("address");
-		String email = request.getParameter("email")==null ? "":request.getParameter("email");
-		String homePage = request.getParameter("homePage")==null ? "":request.getParameter("homePage");
-		String job = request.getParameter("job")==null ? "":request.getParameter("job");
+    String photo = multi.getFilesystemName("fName") == null ? "noimage.jpg" :  multi.getFilesystemName("fName");
+    
+    
+		// 1. 값 가져오기
+		String mid = multi.getParameter("mid")==null ? "":multi.getParameter("mid");
+		String pwd = multi.getParameter("pwd")==null ? "":multi.getParameter("pwd");
+		String nickName = multi.getParameter("nickName")==null ? "":multi.getParameter("nickName");
+		String name = multi.getParameter("name")==null ? "":multi.getParameter("name");
+		String gender = multi.getParameter("gender")==null ? "":multi.getParameter("gender");
+		
+		String birthday = multi.getParameter("birthday")==null ? "" : multi.getParameter("birthday");
+
+		String tel = multi.getParameter("tel")==null ? "":multi.getParameter("tel");
+		String address = multi.getParameter("address")==null ? "":multi.getParameter("address");
+		String email = multi.getParameter("email")==null ? "":multi.getParameter("email");
+		String homePage = multi.getParameter("homePage")==null ? "":multi.getParameter("homePage");
+		String job = multi.getParameter("job")==null ? "":multi.getParameter("job");
 		
 		// hobby는 배열로 오기 때문에 따로 추가 처리가 필요
-		String[] hobbies = request.getParameterValues("hobby");
+		String[] hobbies = multi.getParameterValues("hobby");
 		String hobby = "";
 		if(hobbies.length != 0) {
 			for(String strHobby : hobbies) {
@@ -46,10 +53,8 @@ public class MemberJoinOkCommand implements MemberInterface {
 		}
 		hobby = hobby.substring(0, hobby.lastIndexOf("/"));
 		
-		// noimage.jsp를 여기다 줄 필요가 있는지 의문이다.
-		String photo = request.getParameter("photo")==null ? "noimage.jpg":request.getParameter("photo");
-		String content = request.getParameter("content")==null ? "":request.getParameter("content");
-		String userInfor = request.getParameter("userInfor")==null ? "":request.getParameter("userInfor");
+		String content = multi.getParameter("content")==null ? "":multi.getParameter("content");
+		String userInfor = multi.getParameter("userInfor")==null ? "":multi.getParameter("userInfor");
 		
 		// 2. BackEnd 체크(null값, 길이, 중복여부 확인)
 		

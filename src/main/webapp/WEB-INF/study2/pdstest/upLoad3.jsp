@@ -49,7 +49,6 @@
 		// 추가된 파일 박스 삭제
 		function deleteBox(cnt) {
 			$("#fBox"+cnt).remove();
-			
 		}
 	</script>
 </head>
@@ -72,7 +71,7 @@
 	</form>
 	<!-- file이란 type은 value가 없어서 method 방식으로는 못 보낸다. -->
   <hr/>
-  <input type="button" value="다운로드사이트로이동" onclick="location.href='${ctp}/DownLoad.st';" class="btn btn-secondary"/>
+  <input type="button" value="다운로드 사이트로 이동" onclick="location.href='${ctp}/DownLoad.st';" class="btn btn-secondary"/>
 </div>	
 <P><br /></P>
 <jsp:include page="/include/footer.jsp"/>
