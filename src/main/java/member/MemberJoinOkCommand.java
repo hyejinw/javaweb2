@@ -22,7 +22,7 @@ public class MemberJoinOkCommand implements MemberInterface {
     int maxSize = 1024 * 1024 * 10;   
     String encoding = "UTF-8";
 		
-    // 파일 업로드처리.....(객체가 생성되면서 파일이 업로드처리된다.)
+    // 파일 업로드처리 (객체가 생성되면서 파일이 업로드 된다.)
     MultipartRequest multi = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
 
     String photo = multi.getFilesystemName("fName") == null ? "noimage.jpg" :  multi.getFilesystemName("fName");

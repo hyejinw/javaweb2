@@ -32,7 +32,7 @@
 	        <a class="nav-link" href="${pageContext.request.contextPath}/BoardList.bo">Board</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">PDS</a>
+	        <a class="nav-link" href="${ctp}/PdsList.pds">PDS</a>
 	      </li>
 	      <li>
 				  <div class="dropdown">
