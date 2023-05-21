@@ -14,7 +14,7 @@
 		
 		function sendCheck() {
 			opener.window.document.myform.mid.value = '${mid}';
-			opener.window.document.myform.pwd.focus();
+			opener.window.document.myform.mid.focus();
 			window.close();
 		}
 		function idCheck() {

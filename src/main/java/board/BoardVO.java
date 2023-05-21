@@ -1,13 +1,5 @@
 package board;
 
-/**
- * @author green
- *
- */
-/**
- * @author green
- *
- */
 public class BoardVO {
 	private int idx;
 	private String mid;
